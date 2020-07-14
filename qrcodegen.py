@@ -44,8 +44,16 @@ class MainWindow(QWidget):
         if self.img_file is None:
             return -1
         
-        save_path = QFileDialog.getSaveFileName(self, "Save QR Code", "", "PNG Image (*.png)")
-        self.img_file.save(save_path[0])
+        save_dialog = QFileDialog()
+        save_dialog.setNameFilter("PNG Image (*.png)")
+        save_dialog.setDefaultSuffix("png")
+        save_dialog.setAcceptMode(QFileDialog.AcceptSave)
+
+        if save_dialog.exec_():
+            self.img_file.save(save_dialog.selectedFiles()[0])
+            print("File saved to:", save_dialog.selectedFiles()[0])
+        else:
+            print("Cancelled")
 
     def textChanged(self):
         self.data = self.ui.textEdit.toPlainText()
