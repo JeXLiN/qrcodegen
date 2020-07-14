@@ -37,7 +37,9 @@ class MainWindow(QWidget):
         filename = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; All Files (*.*)")
 
         f = open(filename[0], 'r')
+        self.ui.textEdit.clear()
         self.data = f.read().rstrip()
+        self.ui.textEdit.insertPlainText(self.data)
         f.close()
         
     def saveQRCode(self):
